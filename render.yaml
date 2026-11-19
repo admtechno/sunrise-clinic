@@ -12,7 +12,7 @@ services:
     plan: free                       # 512 MB, sleeps after 15 idle minutes
     region: singapore                # near the database; cannot change later
     healthCheckPath: /ready/         # traffic only to a copy that has its DB
-    autoDeployTrigger: commit        # every push to main (Session 19: checksPass)
+    autoDeployTrigger: checksPass    # Session 19: only after the CI checks passed
     buildFilter:
       paths:
         - api/**                     # a change in web/ does not redeploy the API

@@ -1,0 +1,81 @@
+# Module 9, Session 19: test the API and the web app on every push and
+# every pull request.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read                       # the workflow only reads the repository
+
+concurrency:                           # a newer push cancels the older run
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  api:
+    name: API tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust   # a throwaway database: no password
+          POSTGRES_DB: clinic
+        ports:
+          - 5432                             # a free port on the runner
+        options: >-
+          --health-cmd pg_isready --health-interval 2s
+          --health-timeout 5s --health-retries 15
+    defaults:
+      run:
+        working-directory: api
+    env:
+      DB_NAME: clinic
+      DB_USER: postgres
+      DB_HOST: 127.0.0.1
+      DB_PORT: ${{ job.services.postgres.ports['5432'] }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: api/requirements.txt
+      - name: Install the packages
+        run: pip install -q --disable-pip-version-check -r requirements.txt
+      - name: A throwaway SECRET_KEY for this run
+        run: |
+          key=$(python -c "import secrets; print(secrets.token_urlsafe(50))")
+          echo "::add-mask::$key"
+          echo "DJANGO_SECRET_KEY=$key" >> "$GITHUB_ENV"
+      - name: Tests with coverage
+        run: python -m pytest -q -p no:cacheprovider --cov=api --cov-fail-under=99
+
+  web:
+    name: Web app
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - name: Install the packages
+        run: npm ci --no-audit --no-fund
+      - name: Types
+        run: npm run typecheck
+      - name: Unit and component tests
+        run: npm test
+      - name: Build
+        run: npm run build
+      - name: Check the build
+        run: node ../scripts/predeploy_check.mjs .
