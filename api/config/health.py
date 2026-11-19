@@ -20,7 +20,7 @@ def health(request):
     # Render sets RENDER_GIT_COMMIT to the commit it deployed; 7 characters
     # are enough to tell versions apart, as in `git log --oneline`
     version = os.environ.get("RENDER_GIT_COMMIT", "")[:7] or "local"
-    return JsonResponse({"status": "ok", "version": version})
+    return JsonResponse({"status": "up", "version": version})
 
 
 @require_safe
