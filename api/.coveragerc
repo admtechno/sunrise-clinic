@@ -1,0 +1,10 @@
+# Session 22: what coverage measures. Migrations and the tests themselves are left out.
+[run]
+source = api, clinic
+omit =
+    */migrations/*
+    */tests/*
+
+[report]
+show_missing = True
+skip_covered = False

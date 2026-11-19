@@ -1,0 +1,73 @@
+# Module 9, Session 15: the whole Sunrise Clinic system on one PC.
+#   docker compose up -d        then open http://localhost:8080
+# The secrets come from the file .env next to this one (copy .env.compose.example);
+# that file is never committed, and no secret is written in this file.
+name: sunrise
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: clinic
+      POSTGRES_USER: clinic_app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data     # the data outlives the container
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "clinic_app", "-d", "clinic"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # runs once, before the API: the tables
+  migrate:
+    image: sunrise-api
+    command: ["python", "manage.py", "migrate", "--noinput"]
+    environment: &api-env
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?set DJANGO_SECRET_KEY in .env}
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1,api
+      DB_NAME: clinic
+      DB_USER: clinic_app
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_HOST: db                            # the service name is the host name
+      DB_PORT: "5432"
+      DJANGO_SSL_REDIRECT: "0"               # no HTTPS on your own PC
+      DJANGO_HSTS_SECONDS: "0"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build: ./api
+    image: sunrise-api
+    environment: *api-env
+    volumes:
+      - media:/app/media                     # uploaded reports
+    ports:
+      - "8000:8000"                          # only to try /health/ and /ready/
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  web:
+    build: ./web
+    image: sunrise-web
+    ports:
+      - "8080:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+  # docker compose run --rm seed: the sample doctors, slots and patients
+  seed:
+    image: sunrise-api
+    profiles: ["tools"]
+    command: ["python", "manage.py", "loaddata", "clinic_seed", "clinic_more", "clinic_s06"]
+    environment: *api-env
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  media:

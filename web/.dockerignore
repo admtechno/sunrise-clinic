@@ -1,0 +1,9 @@
+# Module 9, Session 15: what `docker build` never sends for the web app.
+node_modules/
+dist/
+.env.local
+.env.*.local
+test-results/
+playwright-report/
+Dockerfile
+.dockerignore

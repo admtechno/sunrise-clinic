@@ -1,0 +1,4 @@
+# Module 9, Session 17: shell scripts keep Linux line endings, also when the
+# project is checked out on Windows. A start.sh with Windows endings stops on
+# Render with "set: illegal option -".
+*.sh text eol=lf

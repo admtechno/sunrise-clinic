@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Doctors{% endblock %}
+
+{% block content %}
+  <h1>Our Doctors</h1>
+  <form method="get" action="{% url 'clinic:doctor_list' %}" class="filters">
+    <input type="search" name="q" value="{{ q }}" placeholder="Name or speciality">
+    <select name="speciality">
+      <option value="">All specialities</option>
+      {% for s in specialities %}
+        <option value="{{ s.slug }}"{% if s.slug == slug %} selected{% endif %}>{{ s.name }}</option>
+      {% endfor %}
+    </select>
+    <input type="number" name="max_fee" value="{{ max_fee }}" placeholder="Max fee" min="0" step="50">
+    <select name="sort">
+      <option value="name"{% if sort == "name" %} selected{% endif %}>Name</option>
+      <option value="fee"{% if sort == "fee" %} selected{% endif %}>Fee: low to high</option>
+      <option value="-fee"{% if sort == "-fee" %} selected{% endif %}>Fee: high to low</option>
+    </select>
+    <button type="submit">Show</button>
+  </form>
+  <p class="note">{{ paginator.count }} doctor{{ paginator.count|pluralize }} found.</p>
+  <table>
+    <tr><th>#</th><th>Doctor</th><th>Speciality</th><th>Fee</th></tr>
+    {% for doctor in doctors %}
+      <tr>
+        <td>{{ page_obj.start_index|add:forloop.counter0 }}</td>
+        <td><a href="{% url 'clinic:doctor_detail' doctor.id %}">{{ doctor.name }}</a></td>
+        <td>{{ doctor.speciality.name }}</td>
+        <td>Rs {{ doctor.fee|floatformat:2 }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">No doctor matches your search.</td></tr>
+    {% endfor %}
+  </table>
+  {% include "clinic/_pagination.html" %}
+{% endblock %}

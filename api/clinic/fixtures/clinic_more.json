@@ -1,0 +1,7 @@
+[
+  {"model": "clinic.speciality", "pk": 4, "fields": {"name": "Orthopaedics", "slug": "orthopaedics"}},
+  {"model": "clinic.doctor", "pk": 5, "fields": {"name": "Dr. Sana Khan", "speciality": 2, "fee": "550.00", "bio": "", "is_active": true}},
+  {"model": "clinic.doctor", "pk": 6, "fields": {"name": "Dr. Vikram Rao", "speciality": 3, "fee": "800.00", "bio": "Laser and allergy clinic.", "is_active": true}},
+  {"model": "clinic.doctor", "pk": 7, "fields": {"name": "Dr. Neha Joshi", "speciality": 1, "fee": "400.00", "bio": "", "is_active": false}},
+  {"model": "clinic.doctor", "pk": 8, "fields": {"name": "Dr. Arjun Nair", "speciality": 2, "fee": "650.00", "bio": "", "is_active": true}}
+]

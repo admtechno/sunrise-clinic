@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit slot{% else %}New slot{% endif %}{% endblock %}
+
+{% block content %}
+  <h1>{% if object %}Edit {{ object }}{% else %}New time slot{% endif %}</h1>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button type="submit">Save</button>
+  </form>
+  <p><a href="{% url 'clinic:slot_list' %}">&larr; All slots</a></p>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}My appointments{% endblock %}
+
+{% block content %}
+  <h1>Hello, {{ patient.name|default:user.username }}</h1>
+  {% if not patient %}<p class="note">This login has no patient record.</p>{% endif %}
+  <table>
+    <tr><th>Doctor</th><th>Date</th><th>Time</th><th>Status</th><th></th></tr>
+    {% for a in appointments %}
+      <tr>
+        <td>{{ a.slot.doctor.name }}</td>
+        <td>{{ a.slot.date|date:"D d M Y" }}</td>
+        <td>{{ a.slot.start_time|time:"H:i" }}</td>
+        <td>{{ a.get_status_display }}</td>
+        <td>{% if a.status == "booked" %}
+          <a href="{% url 'clinic:reports' a.id %}">Reports</a>
+          <form class="cancel" method="post" action="{% url 'clinic:cancel_appointment' a.id %}">{% csrf_token %}<button type="submit">Cancel</button></form>
+        {% endif %}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">No appointments yet. <a href="{% url 'clinic:doctor_list' %}">Find a doctor</a>.</td></tr>
+    {% endfor %}
+  </table>
+  {% if recent %}
+    <h2>Recently viewed</h2>
+    <ul>{% for d in recent %}<li><a href="{% url 'clinic:doctor_detail' d.id %}">{{ d.name }}</a></li>{% endfor %}</ul>
+  {% endif %}
+{% endblock %}

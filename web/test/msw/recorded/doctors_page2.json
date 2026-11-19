@@ -1,0 +1,43 @@
+{
+  "count": 8,
+  "next": "http://127.0.0.1:8000/api/v1/doctors/?page=3&page_size=3",
+  "previous": "http://127.0.0.1:8000/api/v1/doctors/?page_size=3",
+  "results": [
+    {
+      "id": 1,
+      "name": "Dr. Meera Shah",
+      "speciality": {
+        "id": 1,
+        "name": "General Medicine",
+        "slug": "general-medicine"
+      },
+      "fee": "500.00",
+      "bio": "Family doctor with 12 years of practice.",
+      "is_active": true
+    },
+    {
+      "id": 7,
+      "name": "Dr. Neha Joshi",
+      "speciality": {
+        "id": 1,
+        "name": "General Medicine",
+        "slug": "general-medicine"
+      },
+      "fee": "400.00",
+      "bio": "",
+      "is_active": false
+    },
+    {
+      "id": 4,
+      "name": "Dr. Rohan Mehta",
+      "speciality": {
+        "id": 1,
+        "name": "General Medicine",
+        "slug": "general-medicine"
+      },
+      "fee": "450.00",
+      "bio": "",
+      "is_active": true
+    }
+  ]
+}

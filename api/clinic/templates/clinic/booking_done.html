@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}Booked{% endblock %}
+
+{% block content %}
+  <h1>See you soon, {{ appointment.patient.name }}</h1>
+  <p>{{ appointment.slot.doctor.name }}, {{ appointment.slot.date|date:"l, d F Y" }} at {{ appointment.slot.start_time|time:"H:i" }}.</p>
+  {% if appointment.reason %}<p class="note">Reason: {{ appointment.reason }}</p>{% endif %}
+  <p class="note">Please arrive ten minutes early. To cancel, call the clinic.</p>
+  {% include "clinic/_back_link.html" %}
+{% endblock %}

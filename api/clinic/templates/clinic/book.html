@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Book {{ doctor.name }}{% endblock %}
+
+{% block content %}
+  <h1>Book {{ doctor.name }}</h1>
+  <p class="note">{{ doctor.speciality.name }} · fee Rs {{ doctor.fee }}</p>
+  {% if form.fields.slot.queryset or form.is_bound %}
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+      <fieldset>
+        <legend>{{ form.slot.label }}</legend>
+        {{ form.slot.errors }}
+        {{ form.slot }}
+      </fieldset>
+      {% for field in form %}{% if field.name != "slot" %}
+        <div class="field">
+          {{ field.label_tag }}
+          {{ field }}
+          {% if field.help_text %}<small>{{ field.help_text }}</small>{% endif %}
+          {{ field.errors }}
+        </div>
+      {% endif %}{% endfor %}
+      <button type="submit">Book</button>
+    </form>
+  {% else %}
+    <p>{{ doctor.name }} has no free slots at the moment.</p>
+  {% endif %}
+  {% include "clinic/_back_link.html" %}
+{% endblock %}

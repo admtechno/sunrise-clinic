@@ -1,0 +1,18 @@
+[
+  {
+    "id": 2,
+    "doctor": 1,
+    "doctor_name": "Dr. Meera Shah",
+    "date": "2026-12-01",
+    "start_time": "10:30",
+    "booked": false
+  },
+  {
+    "id": 6,
+    "doctor": 1,
+    "doctor_name": "Dr. Meera Shah",
+    "date": "2026-12-02",
+    "start_time": "10:00",
+    "booked": false
+  }
+]

@@ -1,0 +1,33 @@
+# Module 9, Session 17: the API on Render, as a Blueprint. In the project
+# folder, next to api/. Render reads it when you create the Blueprint and on
+# every push. No secret is written here: sync: false makes Render ask for the
+# value once, in its dashboard.
+services:
+  - type: web
+    name: sunrise-api
+    runtime: docker                  # build api/Dockerfile (Session 15)
+    dockerfilePath: ./api/Dockerfile
+    dockerContext: ./api
+    dockerCommand: sh start.sh       # migrate, then gunicorn
+    plan: free                       # 512 MB, sleeps after 15 idle minutes
+    region: singapore                # near the database; cannot change later
+    healthCheckPath: /ready/         # traffic only to a copy that has its DB
+    autoDeployTrigger: commit        # every push to main (Session 19: checksPass)
+    buildFilter:
+      paths:
+        - api/**                     # a change in web/ does not redeploy the API
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true          # Render makes a long random value once
+      - key: DATABASE_URL
+        sync: false                  # Neon's POOLED address (Session 16)
+      - key: DATABASE_DIRECT_URL
+        sync: false                  # Neon's DIRECT address, for start.sh
+      - key: DJANGO_CORS_ORIGINS
+        sync: false                  # the web app's address (Session 18)
+      - key: DB_CONN_MAX_AGE
+        value: "60"
+      - key: WEB_CONCURRENCY
+        value: "2"
+      - key: DJANGO_LOG_TO_FILE
+        value: "0"                   # the log goes to Render's log (Session 15)

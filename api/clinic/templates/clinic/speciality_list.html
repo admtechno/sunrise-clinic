@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Specialities{% endblock %}
+
+{% block content %}
+  <h1>Specialities</h1>
+  <table>
+    <tr><th>Speciality</th><th>Active doctors</th><th>Fees from</th></tr>
+    {% for s in specialities %}
+      <tr>
+        <td><a href="{% url 'clinic:speciality_doctors' s.slug %}">{{ s.name }}</a></td>
+        <td>{{ s.active }}</td>
+        <td>{% if s.lowest_fee %}Rs {{ s.lowest_fee|floatformat:2 }}{% else %}not available yet{% endif %}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

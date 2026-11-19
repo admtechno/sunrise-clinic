@@ -1,0 +1,21 @@
+# the secrets and the things that each computer makes for itself
+.env
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+media/
+staticfiles/
+.coverage
+# what Playwright writes after a run: traces hold what a test typed
+test-results/
+playwright-report/
+# Session 16: every .env file, whatever its ending; only examples are committed
+.env.*
+!*.example
+# ...but Vite's mode files in web are committed: they hold only public VITE_
+# values (Session 14), and every build, on Vercel or in CI, needs them
+!web/.env.development
+!web/.env.production
+!web/.env.test

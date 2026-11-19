@@ -1,0 +1,21 @@
+# Module 9, Session 15: what `docker build` never sends to the engine.
+# Secrets and files of your own PC
+.env
+.env.*
+!.env.example
+!.env.production.example
+# made on your PC, made again in the image or not needed there
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.coverage
+htmlcov/
+staticfiles/
+logs/
+media/
+test_media/
+db.sqlite3
+# the Docker files themselves
+Dockerfile
+.dockerignore

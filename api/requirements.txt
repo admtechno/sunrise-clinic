@@ -1,0 +1,27 @@
+django==6.1.3
+psycopg[binary]==3.3.8
+python-dotenv==1.2.4
+# REST API (Session 14)
+djangorestframework==3.18.3
+# testing (Session 13)
+pytest==9.2.0
+pytest-django==4.14.0
+# filtering (Session 17)
+django-filter==26.2
+# JWT authentication (Session 18)
+djangorestframework-simplejwt==5.5.1
+# API documentation (Session 20)
+drf-spectacular==0.30.0
+drf-spectacular-sidecar==2026.10.1
+# CORS for the React client (Session 21)
+django-cors-headers==4.9.0
+# coverage (Session 22)
+pytest-cov==7.1.0
+# Module 9, Session 09: test data, a clock for tests, and the contract check
+factory-boy==3.3.3
+time-machine==3.6.0
+jsonschema==4.26.0
+# production preview (Session 24)
+whitenoise==6.12.0
+gunicorn==27.0.0; sys_platform != "win32"
+waitress==3.0.2

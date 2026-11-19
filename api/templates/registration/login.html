@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Log in{% endblock %}
+
+{% block content %}
+  <h1>Log in</h1>
+  {% if next and not user.is_authenticated %}<p class="note">Please log in to see this page.</p>{% endif %}
+  <form method="post" action="{% url 'login' %}" novalidate>
+    {% csrf_token %}
+    {{ form.as_div }}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit">Log in</button>
+  </form>
+  <p>New patient? <a href="{% url 'signup' %}">Create an account</a></p>
+{% endblock %}

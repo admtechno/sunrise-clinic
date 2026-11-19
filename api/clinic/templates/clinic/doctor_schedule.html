@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}My schedule{% endblock %}
+
+{% block content %}
+  <h1>Schedule of {{ user.doctor.name }}</h1>
+  <table>
+    <tr><th>Date</th><th>Time</th><th>Patient</th><th>Reason for the visit</th></tr>
+    {% for a in appointments %}
+      <tr>
+        <td>{{ a.slot.date|date:"D d M Y" }}</td>
+        <td>{{ a.slot.start_time|time:"H:i" }}</td>
+        <td>{{ a.patient.name }}</td>
+        <td>{{ a.reason }}</td>{# auto-escaped: <script> is shown as text, never run #}
+      </tr>
+    {% empty %}
+      <tr><td colspan="4">No booked appointments.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

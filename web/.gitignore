@@ -1,0 +1,7 @@
+node_modules
+dist
+.env.local
+.env.*.local
+# Session 12: what Playwright writes after a run
+test-results
+playwright-report

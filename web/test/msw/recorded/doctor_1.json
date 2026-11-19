@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "name": "Dr. Meera Shah",
+  "speciality": {
+    "id": 1,
+    "name": "General Medicine",
+    "slug": "general-medicine"
+  },
+  "fee": "500.00",
+  "bio": "Family doctor with 12 years of practice.",
+  "is_active": true
+}

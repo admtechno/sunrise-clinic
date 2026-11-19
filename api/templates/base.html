@@ -1,0 +1,30 @@
+{% load static %}<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}Sunrise Clinic{% endblock %} | Sunrise Clinic</title>
+  <link rel="stylesheet" href="{% static 'clinic/site.css' %}">
+</head>
+<body>
+  <header>
+    <a class="brand" href="{% url 'clinic:home' %}">Sunrise Clinic</a>
+    <nav>
+      <a href="{% url 'clinic:doctor_list' %}">Doctors</a>
+      <a href="{% url 'clinic:speciality_list' %}">Specialities</a>
+      {% if user.is_authenticated %}
+        {% if user.doctor %}<a href="{% url 'clinic:doctor_schedule' %}">My schedule</a>
+        {% else %}<a href="{% url 'clinic:my_appointments' %}">My appointments</a>{% endif %}
+        {% if perms.clinic.view_timeslot %}<a href="{% url 'clinic:slot_list' %}">Manage slots</a>{% endif %}
+        <form class="inline" method="post" action="{% url 'logout' %}">{% csrf_token %}<button type="submit">Log out {{ user.username }}</button></form>
+      {% else %}
+        <a href="{% url 'login' %}">Log in</a>
+      {% endif %}
+    </nav>
+  </header>
+  <main>
+    {% for message in messages %}<p class="message {{ message.tags }}">{{ message }}</p>{% endfor %}
+    {% block content %}{% endblock %}
+  </main>
+  <footer>Clinic Appointment Portal · built in the Django module</footer>
+</body>
+</html>

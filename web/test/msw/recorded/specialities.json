@@ -1,0 +1,27 @@
+{
+  "count": 4,
+  "next": null,
+  "previous": null,
+  "results": [
+    {
+      "id": 3,
+      "name": "Dermatology",
+      "slug": "dermatology"
+    },
+    {
+      "id": 1,
+      "name": "General Medicine",
+      "slug": "general-medicine"
+    },
+    {
+      "id": 4,
+      "name": "Orthopaedics",
+      "slug": "orthopaedics"
+    },
+    {
+      "id": 2,
+      "name": "Paediatrics",
+      "slug": "paediatrics"
+    }
+  ]
+}

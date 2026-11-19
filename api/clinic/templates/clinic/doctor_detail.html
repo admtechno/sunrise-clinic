@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{{ doctor.name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ doctor.name }}</h1>
+  <p class="tag">{{ doctor.speciality.name|upper }}</p>
+  <p>{{ doctor.bio|default:"No profile text yet." }}</p>
+  <p>Consultation fee: <strong>Rs {{ doctor.fee }}</strong></p>
+  <h2>Time slots</h2>
+  <ul class="slots">
+    {% for slot in slots %}
+      <li>{{ slot.date|date:"D, d M Y" }} at {{ slot.start_time|time:"H:i" }} —
+        {% if slot.booked %}<span class="booked">booked</span>{% else %}<span class="free">free</span>{% endif %}</li>
+    {% empty %}
+      <li>No slots yet.</li>
+    {% endfor %}
+  </ul>
+  <p><a class="button" href="{% url 'clinic:book' doctor.id %}">Book an appointment</a></p>
+  {% include "clinic/_back_link.html" %}
+{% endblock %}

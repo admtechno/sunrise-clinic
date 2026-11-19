@@ -1,0 +1,43 @@
+{
+  "count": 8,
+  "next": "http://127.0.0.1:8000/api/v1/doctors/?page=2&page_size=3",
+  "previous": null,
+  "results": [
+    {
+      "id": 8,
+      "name": "Dr. Arjun Nair",
+      "speciality": {
+        "id": 2,
+        "name": "Paediatrics",
+        "slug": "paediatrics"
+      },
+      "fee": "650.00",
+      "bio": "",
+      "is_active": true
+    },
+    {
+      "id": 2,
+      "name": "Dr. Arjun Patel",
+      "speciality": {
+        "id": 2,
+        "name": "Paediatrics",
+        "slug": "paediatrics"
+      },
+      "fee": "600.00",
+      "bio": "",
+      "is_active": true
+    },
+    {
+      "id": 3,
+      "name": "Dr. Kavya Iyer",
+      "speciality": {
+        "id": 3,
+        "name": "Dermatology",
+        "slug": "dermatology"
+      },
+      "fee": "700.00",
+      "bio": "Skin, hair & nail care.",
+      "is_active": true
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+[
+  {"model": "clinic.speciality", "pk": 1, "fields": {"name": "General Medicine", "slug": "general-medicine"}},
+  {"model": "clinic.speciality", "pk": 2, "fields": {"name": "Paediatrics", "slug": "paediatrics"}},
+  {"model": "clinic.speciality", "pk": 3, "fields": {"name": "Dermatology", "slug": "dermatology"}},
+  {"model": "clinic.doctor", "pk": 1, "fields": {"name": "Dr. Meera Shah", "speciality": 1, "fee": "500.00", "bio": "Family doctor with 12 years of practice.", "is_active": true}},
+  {"model": "clinic.doctor", "pk": 2, "fields": {"name": "Dr. Arjun Patel", "speciality": 2, "fee": "600.00", "bio": "", "is_active": true}},
+  {"model": "clinic.doctor", "pk": 3, "fields": {"name": "Dr. Kavya Iyer", "speciality": 3, "fee": "700.00", "bio": "Skin, hair & nail care.", "is_active": true}},
+  {"model": "clinic.doctor", "pk": 4, "fields": {"name": "Dr. Rohan Mehta", "speciality": 1, "fee": "450.00", "bio": "", "is_active": true}}
+]

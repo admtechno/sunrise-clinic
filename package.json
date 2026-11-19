@@ -1,0 +1,22 @@
+{
+  "name": "sunrise-clinic-desk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Part B project: the Sunrise Clinic Desk and API with every test behind one command",
+  "scripts": {
+    "web": "npm --prefix web run dev -- --host 127.0.0.1",
+    "build": "npm --prefix web run build",
+    "predeploy": "npm run build && node scripts/predeploy_check.mjs web",
+    "ready": "node scripts/wait_for_ready.mjs",
+    "check": "node tools/verify_part_a.mjs",
+    "test:unit": "node --test --test-reporter=spec \"web/test/unit/**/*.test.ts\"",
+    "test:components": "npm --prefix web run test:components",
+    "test:api": "cd api && python -m pytest -q --cov=api --cov-report=term-missing:skip-covered --cov-fail-under=99",
+    "test": "npm run test:unit && npm run test:components && npm run test:api",
+    "test:e2e": "npm --prefix web run test:e2e",
+    "test:all": "npm run test:unit && npm run test:components && npm run test:api && npm run test:e2e"
+  },
+  "engines": {
+    "node": ">=22.18"
+  }
+}
