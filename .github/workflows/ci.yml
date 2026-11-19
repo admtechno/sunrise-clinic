@@ -37,7 +37,6 @@ jobs:
       DB_NAME: clinic
       DB_USER: postgres
       DB_HOST: 127.0.0.1
-      DB_PORT: ${{ job.services.postgres.ports['5432'] }}
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-python@v5
@@ -52,6 +51,8 @@ jobs:
           key=$(python -c "import secrets; print(secrets.token_urlsafe(50))")
           echo "::add-mask::$key"
           echo "DJANGO_SECRET_KEY=$key" >> "$GITHUB_ENV"
+      - name: The database port of this run
+        run: echo "DB_PORT=${{ job.services.postgres.ports['5432'] }}" >> "$GITHUB_ENV"
       - name: Tests with coverage
         run: python -m pytest -q -p no:cacheprovider --cov=api --cov-fail-under=99
 
