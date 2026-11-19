@@ -5,8 +5,8 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://sunrise-api-ajni.onrender.com/api/:path*"
+      "source": "/api/(.*)",
+      "destination": "https://sunrise-api-ajni.onrender.com/api/$1"
     },
     {
       "source": "/((?!assets/).*)",
