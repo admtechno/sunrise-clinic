@@ -1,7 +1,8 @@
 """Module 9, Session 17: a few quick checks of a deployed API, after each deploy.
     python scripts/smoke_test.py https://sunrise-api.onrender.com
-           [--origin https://sunrise-desk.example]
---origin: the web app's address, for the CORS check.
+           [--origin https://sunrise-desk.example] [--expect-version 3f9c2a1]
+--origin: the web app's address, for the CORS check. --expect-version: the
+commit you pushed (git rev-parse --short HEAD); fails while the old one runs.
 It only reads: GET and OPTIONS, no login. Exit code 1 if a check fails."""
 import argparse
 import json
@@ -12,6 +13,7 @@ import urllib.request
 parser = argparse.ArgumentParser()
 parser.add_argument("base")
 parser.add_argument("--origin", default="")
+parser.add_argument("--expect-version", default="")      # DIY
 args = parser.parse_args()
 base = args.base.rstrip("/")
 failed = 0
@@ -38,8 +40,11 @@ check("/ready/ answers 200", status == 200, str(status))
 if status != 200:
     sys.exit(1)
 status, _, body = ask("/health/")
-check("/health/ answers 200", status == 200,
-      "version " + json.loads(body)["version"])
+version = json.loads(body)["version"]
+check("/health/ answers 200", status == 200, "version " + version)
+if args.expect_version:                                   # DIY
+    check("the new version is live", version == args.expect_version[:7],
+          f"expected {args.expect_version[:7]}")
 status, headers, body = ask("/api/v1/doctors/")
 # json.loads only on a 200: a 500 page is HTML, and parsing it would crash
 # the smoke test instead of letting it report FAIL

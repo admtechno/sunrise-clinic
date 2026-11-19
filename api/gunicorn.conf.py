@@ -10,4 +10,6 @@ bind = f"0.0.0.0:{os.environ.get('PORT', '8000')}"
 workers = int(os.environ.get("WEB_CONCURRENCY", "2"))
 timeout = 30          # a worker stuck longer than this is restarted
 accesslog = "-"       # one line per request, to the terminal: the host keeps it
+# Session 20: who, what, the status, the size and how long it took (%(M)s: ms)
+access_log_format = '%(h)s "%(r)s" %(s)s %(B)s %(M)sms "%(a)s"'
 errorlog = "-"
