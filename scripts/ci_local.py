@@ -25,7 +25,7 @@ KEEP = ("HTTPS_PROXY", "HTTP_PROXY", "NO_PROXY", "https_proxy", "http_proxy")
 
 
 def sh(*args, **kw):
-    return subprocess.run(args, capture_output=True, text=True, **kw)
+    return subprocess.run(args, capture_output=True, text=True, encoding="utf-8", errors="replace", **kw)
 
 
 def expand(text, ports):
